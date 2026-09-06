@@ -3,9 +3,9 @@
   "id": "${MOD_ID}",
   "version": "${VERSION}",
   "name": "${MOD_NAME}",
-  "description": "Заготовка для мода на JouTak (joutak.ru)",
+  "description": "Мод для сохранения пути",
   "authors": [
-    "JouTak"
+    "WeNeedFood"
   ],
   "contact": {
     "homepage": "https://joutak.ru",
