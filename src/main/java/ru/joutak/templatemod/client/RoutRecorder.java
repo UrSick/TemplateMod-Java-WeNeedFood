@@ -1,9 +1,10 @@
 package ru.joutak.templatemod.client;
 import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoutRecorder {
-    enum RecordingState {
+    public enum RecordingState {
         STOPPED,
         RECORDING,
         PAUSED
@@ -13,6 +14,34 @@ public class RoutRecorder {
         points.add(position);
         this.state = RecordingState.RECORDING;
         this.ticksSinceLastPoint = 0;
+    }
+
+    public void tick(Vec3 position) {
+        if (this.state != RecordingState.RECORDING) {
+            return;
+        }
+        this.ticksSinceLastPoint ++;
+        if (this.ticksSinceLastPoint >= 20) {
+            if (!points.getLast().equals(position)) {
+                points.add(position);
+            }
+            this.ticksSinceLastPoint = 0;
+        }
+    }
+    public void toggleRecording(Vec3 position) {
+        if (this.state == RecordingState.STOPPED) {
+            start(position);
+        }
+        else if (this.state == RecordingState.RECORDING || this.state == RecordingState.PAUSED) {
+            this.state = RecordingState.STOPPED;
+            this.ticksSinceLastPoint = 0;
+        }
+    }
+    public List<Vec3> getPoints() {
+        return List.copyOf(points);
+    }
+    public RecordingState getState() {
+        return state;
     }
     private RecordingState state = RecordingState.STOPPED;
     private int ticksSinceLastPoint = 0;
