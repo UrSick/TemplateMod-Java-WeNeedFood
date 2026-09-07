@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import ru.joutak.templatemod.client.RoutRecorder.RecordingState;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 
 public class TemplateModClient implements ClientModInitializer {
 
@@ -44,6 +45,10 @@ public class TemplateModClient implements ClientModInitializer {
             }
             recorder.tick(client.player.position());
         });
+        LevelRenderEvents.END_EXTRACTION.register(context -> {
+            RouteMarkers.extract(recorder.getPoints());
+        });
+        LevelRenderEvents.COLLECT_SUBMITS.register(RouteMarkers::draw);
     }
     private final RoutRecorder recorder = new RoutRecorder();
 
