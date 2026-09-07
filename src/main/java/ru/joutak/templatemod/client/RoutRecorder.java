@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoutRecorder {
+    private final int recordingIntervalTicks;
+    public RoutRecorder(int recordingIntervalTicks) {
+        this.recordingIntervalTicks = recordingIntervalTicks;
+    }
     public enum RecordingState {
         STOPPED,
         RECORDING,
@@ -21,7 +25,7 @@ public class RoutRecorder {
             return;
         }
         this.ticksSinceLastPoint ++;
-        if (this.ticksSinceLastPoint >= 20) {
+        if (this.ticksSinceLastPoint >= this.recordingIntervalTicks) {
             if (!points.getLast().equals(position)) {
                 points.add(position);
             }

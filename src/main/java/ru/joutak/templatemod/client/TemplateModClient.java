@@ -1,5 +1,6 @@
 package ru.joutak.templatemod.client;
-
+import ru.joutak.templatemod.config.ConfigLoader;
+import ru.joutak.templatemod.config.ModConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
@@ -17,6 +18,11 @@ public class TemplateModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ModConfig config = ConfigLoader.load();
+
+        this.recorder = new RoutRecorder(
+                config.getRecordingIntervalTicks()
+        );
         TemplateMod.LOGGER.info("Mod runned", TemplateMod.MOD_ID);
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.isPaused()) {
@@ -50,7 +56,7 @@ public class TemplateModClient implements ClientModInitializer {
         });
         LevelRenderEvents.COLLECT_SUBMITS.register(RouteMarkers::draw);
     }
-    private final RoutRecorder recorder = new RoutRecorder();
+    private RoutRecorder recorder;
 
     KeyMapping.Category Pathtrack = KeyMapping.Category.register(
             Identifier.fromNamespaceAndPath(TemplateMod.MOD_ID, "controls")
