@@ -23,6 +23,9 @@
     ],
     "modmenu": [
       "ru.joutak.templatemod.compat.ModMenuIntegration"
+    ],
+    "lambdynlights:initializer": [
+      "ru.joutak.templatemod.compat.DynamicLightsIntegration"
     ]
   },
   "mixins": [],

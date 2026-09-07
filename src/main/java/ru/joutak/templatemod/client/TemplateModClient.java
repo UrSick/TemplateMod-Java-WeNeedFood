@@ -15,6 +15,8 @@ import ru.joutak.templatemod.client.RoutRecorder.RecordingState;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.minecraft.client.multiplayer.ClientLevel;
+
 public class TemplateModClient implements ClientModInitializer {
 
     @Override
@@ -26,6 +28,11 @@ public class TemplateModClient implements ClientModInitializer {
         );
         TemplateMod.LOGGER.info("Mod runned", TemplateMod.MOD_ID);
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (this.routeLevel != client.level) {
+                this.recorder.clear();
+                RoutLighting.update(this.recorder.getPoints());
+                this.routeLevel = client.level;
+            }
             if (client.player == null || client.isPaused()) {
                 return;
             }
@@ -54,6 +61,7 @@ public class TemplateModClient implements ClientModInitializer {
                 recorder.togglePause();
             }
             recorder.tick(client.player.position());
+            RoutLighting.update(recorder.getPoints());
         });
         LevelRenderEvents.END_EXTRACTION.register(context -> {
             RouteMarkers.extract(recorder.getPoints());
@@ -67,7 +75,7 @@ public class TemplateModClient implements ClientModInitializer {
         );
     }
     private RoutRecorder recorder;
-
+    private ClientLevel routeLevel;
     KeyMapping.Category Pathtrack = KeyMapping.Category.register(
             Identifier.fromNamespaceAndPath(TemplateMod.MOD_ID, "controls")
     );

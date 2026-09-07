@@ -48,6 +48,11 @@ public class RoutRecorder {
             this.state = RecordingState.RECORDING;
         }
     }
+    public void clear() {
+        this.points.clear();
+        this.state = RecordingState.STOPPED;
+        this.ticksSinceLastPoint = 0;
+    }
     public List<Vec3> getPoints() {
         return List.copyOf(points);
     }

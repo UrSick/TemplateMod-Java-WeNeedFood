@@ -24,6 +24,9 @@ repositories {
     maven("https://maven.shedaniel.me/") {
         name = "Shedaniel"
     }
+    maven("https://maven.gegy.dev") {
+        name = "Gegy"
+    }
 }
 
 dependencies {
@@ -43,6 +46,11 @@ dependencies {
     }
 
     localRuntime(libs.cloth.config) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+    compileOnly(libs.lambdynamiclights.api)
+
+    localRuntime(libs.lambdynamiclights.runtime) {
         exclude(group = "net.fabricmc.fabric-api")
     }
 }
