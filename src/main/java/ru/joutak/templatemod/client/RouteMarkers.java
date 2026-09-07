@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.LightCoordsUtil;
+import net.minecraft.util.Util;
 
 public class RouteMarkers {
     private static final Identifier TEXTURE =
@@ -17,8 +18,13 @@ public class RouteMarkers {
                     TemplateMod.MOD_ID, "textures/waypoint.png"
             );
     private static List<Vec3> renderPoints = List.of();
+    private static double bobOffset = 0.0;
     public static void extract(List<Vec3> points) {
         renderPoints = List.copyOf(points);
+        double seconds = Util.getMillis() / 1000.0;
+        double period = 4.0;
+        double amplitude = 0.1;
+        bobOffset = Math.sin(seconds * 2 * Math.PI / period) * amplitude;
     }
     public static void draw(LevelRenderContext context) {
         Vec3 camera = context.levelState().cameraRenderState.pos;
@@ -28,7 +34,7 @@ public class RouteMarkers {
             double y = point.y - camera.y;
             double z = point.z - camera.z;
             matrices.pushPose();
-            matrices.translate(x, y+0.5, z);
+            matrices.translate(x, y + 0.5 + bobOffset, z);
             matrices.mulPose(context.levelState().cameraRenderState.orientation);
 
             context.submitNodeCollector().submitCustomGeometry(
