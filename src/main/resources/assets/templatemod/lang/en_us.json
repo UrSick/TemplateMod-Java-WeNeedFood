@@ -1,5 +1,6 @@
 {
   "key.category.templatemod.controls": "PathTrack",
   "key.PathtrackMod.start-recording": "Start Recording",
-  "key.templatemod.show_list": "Show route points"
+  "key.templatemod.show_list": "Show route points",
+  "key.templatemod.pause_recording": "Pause / resume recording"
 }

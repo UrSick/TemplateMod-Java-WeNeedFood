@@ -41,6 +41,13 @@ public class RoutRecorder {
             this.ticksSinceLastPoint = 0;
         }
     }
+    public void togglePause() {
+        if (this.state == RecordingState.RECORDING) {
+            this.state = RecordingState.PAUSED;
+        } else if (this.state == RecordingState.PAUSED) {
+            this.state = RecordingState.RECORDING;
+        }
+    }
     public List<Vec3> getPoints() {
         return List.copyOf(points);
     }

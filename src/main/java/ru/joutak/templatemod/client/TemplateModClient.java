@@ -13,7 +13,8 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import ru.joutak.templatemod.client.RoutRecorder.RecordingState;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
-
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 public class TemplateModClient implements ClientModInitializer {
 
     @Override
@@ -49,12 +50,21 @@ public class TemplateModClient implements ClientModInitializer {
                     }
                 }
             }
+            while (this.pauseRecording.consumeClick()) {
+                recorder.togglePause();
+            }
             recorder.tick(client.player.position());
         });
         LevelRenderEvents.END_EXTRACTION.register(context -> {
             RouteMarkers.extract(recorder.getPoints());
         });
         LevelRenderEvents.COLLECT_SUBMITS.register(RouteMarkers::draw);
+        HudElementRegistry.attachElementBefore(
+                VanillaHudElements.CHAT,
+                Identifier.fromNamespaceAndPath(TemplateMod.MOD_ID, "recording_hud"),
+                (graphics, deltaTracker) ->
+                        RecordingHud.draw(graphics, recorder.getState())
+        );
     }
     private RoutRecorder recorder;
 
@@ -68,6 +78,14 @@ public class TemplateModClient implements ClientModInitializer {
                     InputConstants.KEY_C,
                     this.Pathtrack
             ));
+    KeyMapping pauseRecording = KeyMappingHelper.registerKeyMapping(
+            new KeyMapping(
+                    "key.templatemod.pause_recording",
+                    InputConstants.Type.KEYSYM,
+                    InputConstants.KEY_V,
+                    this.Pathtrack
+            )
+    );
     KeyMapping ShowList = KeyMappingHelper.registerKeyMapping(
             new KeyMapping("key.templatemod.show_list",
             InputConstants.Type.KEYSYM,
