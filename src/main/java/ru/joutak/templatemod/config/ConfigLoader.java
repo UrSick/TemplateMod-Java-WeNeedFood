@@ -29,7 +29,7 @@ public class ConfigLoader {
 
             if (config == null || config.getRecordingIntervalTicks() < 1) {
                 TemplateMod.LOGGER.warn(
-                        "No",
+                        "В конфиге {} неверный интервал записи. Использую {} тиков.",
                         path, defaults.getRecordingIntervalTicks()
                 );
                 return defaults;
@@ -38,7 +38,7 @@ public class ConfigLoader {
             return config;
         } catch (IOException | JsonParseException e) {
             TemplateMod.LOGGER.warn(
-                    "error: " + path, e
+                    "Не удалось прочитать конфиг {}. Использую стандартные настройки.", path, e
             );
             return defaults;
         }
@@ -53,7 +53,7 @@ public class ConfigLoader {
             Files.createDirectories(path.getParent());
             Files.writeString(path, GSON.toJson(config));
         } catch (IOException e) {
-            TemplateMod.LOGGER.error(">=1" + path, e);
+            TemplateMod.LOGGER.error("Не удалось сохранить конфиг {}.", path, e);
         }
 
     }

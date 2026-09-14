@@ -5,7 +5,7 @@ public class ModConfig {
 
     public void setRecordingIntervalTicks(int value) {
         if (value < 1) {
-            throw new IllegalArgumentException(">=1");
+            throw new IllegalArgumentException("Интервал записи должен быть не меньше одного тика");
         }
 
         this.recordingIntervalTicks = value;
