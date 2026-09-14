@@ -56,7 +56,7 @@ public class TemplateModClient implements ClientModInitializer {
                     } else {
                         client.player.sendSystemMessage(Component.translatable(
                                 "message.templatemod.return_hint",
-                                this.startReturn.getTranslatedKeyMessage()
+                                getHintKeyName(KeyMappingHelper.getBoundKeyOf(this.startReturn))
                         ));
                     }
                 }
@@ -130,6 +130,16 @@ public class TemplateModClient implements ClientModInitializer {
                 }
         );
     }
+    private static Component getHintKeyName(InputConstants.Key key) {
+        int keyCode = key.getValue();
+        if (key.getType() == InputConstants.Type.KEYSYM
+                && keyCode >= InputConstants.KEY_A && keyCode <= InputConstants.KEY_Z) {
+            // Названия букв в подсказке не зависят от раскладки Windows.
+            return Component.literal(String.valueOf((char) keyCode));
+        }
+        return key.getDisplayName();
+    }
+
     private RoutRecorder recorder;
     private final RouteNavigator navigator = new RouteNavigator();
     private ClientLevel routeLevel;
