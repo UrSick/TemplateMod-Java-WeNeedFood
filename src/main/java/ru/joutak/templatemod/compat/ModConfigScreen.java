@@ -12,16 +12,16 @@ public class ModConfigScreen {
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Component.literal("Настройки маршрута"));
+                .setTitle(Component.translatable("config.templatemod.title"));
 
         var category = builder.getOrCreateCategory(
-                Component.literal("Запись")
+                Component.translatable("config.templatemod.category.recording")
         );
 
         category.addEntry(
                 builder.entryBuilder()
                         .startIntField(
-                                Component.literal("Интервал записи, тики"),
+                                Component.translatable("config.templatemod.recording_interval_ticks"),
                                 config.getRecordingIntervalTicks()
                         )
                         .setMin(1)

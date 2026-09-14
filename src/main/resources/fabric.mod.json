@@ -4,7 +4,7 @@
   "version": "${VERSION}",
   "name": "${MOD_NAME}",
   "icon": "assets/templatemod/textures/icon.png",
-  "description": "Записывает маршрут, ставит стрелочки и помогает вернуться обратно.",
+  "description": "Records your route, marks it with arrows, and helps you find your way back.",
   "authors": [
     "WeNeedFood"
   ],

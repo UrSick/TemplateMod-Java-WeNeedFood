@@ -17,5 +17,9 @@
   "message.templatemod.finish_recording": "Сначала заверши запись",
   "message.templatemod.return_finished": "Ты вернулся к началу маршрута",
   "hud.templatemod.return_distance": "%s бл.",
-  "hud.templatemod.return_progress": "Осталось точек: %s"
+  "hud.templatemod.return_progress": "Осталось точек: %s",
+  "config.templatemod.title": "Настройки маршрута",
+  "config.templatemod.category.recording": "Запись",
+  "config.templatemod.recording_interval_ticks": "Интервал записи, тики",
+  "modmenu.descriptionTranslation.templatemod": "Записывает маршрут, ставит стрелочки и помогает вернуться обратно."
 }
